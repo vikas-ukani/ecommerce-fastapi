@@ -1,0 +1,9 @@
+# local env files
+.env*.local
+
+venv
+env
+.env
+.vscode/PythonImportHelper-v2-Completion.json
+app/__pycache__/*
+app/*/__pycache__/*
