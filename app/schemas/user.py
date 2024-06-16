@@ -9,7 +9,6 @@ class UserBaseSchema(BaseModel):
     photo: str | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None
-    
 
 class CreateUserSchema(UserBaseSchema):
     name: str = Field()

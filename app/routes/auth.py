@@ -25,8 +25,8 @@ async def signIn(data: LoginSchema):
 
     if user:
         print(user)
-        if not verify_password(data.password, user["password"]):
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid credentials.")
+        if not data.password and not verify_password(data.password, user["password"]):
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid login credentials. Try again.")
         return {"success": True, "token": create_token(str(user["_id"]))}
     else:
         raise HTTPException(

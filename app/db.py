@@ -9,6 +9,8 @@ db = client["fast-com"]
 User = db.get_collection("users")
 Product = db.get_collection("products")
 Category = db.get_collection("categories")
+Cart = db.get_collection("carts")
+CartItem = db.get_collection("cart_items")
 
 
 def serializeDict(object: dict) -> dict:
