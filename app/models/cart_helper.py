@@ -1,4 +1,4 @@
-from app.db import Cart, CartItem
+from app.db import Cart, CartItem, Product
 from app.db import serializeDict, serializeList
 from bson import ObjectId
 
@@ -27,21 +27,34 @@ async def add_to_cart(user, data: dict):
             'cart_id': cart['_id'],
         })
     else:
-        CartItem.update_one({
-            'product_id': data.product_id,
-            'user_id': user['_id'],
-            'cart_id': cart['_id'],
-        },
-        {
-            "$set": {
-                'quantity': existingCartItem['quantity'] + data.quantity
-            }
-        })
-
+        quantity = existingCartItem['quantity'] + data.quantity
+        if quantity == 0:
+            await remove_cart_items(user, str(existingCartItem['_id']))
+        else:
+            CartItem.update_one({
+                'product_id': data.product_id,
+                'user_id': user['_id'],
+                'cart_id': cart['_id'],
+            },
+            {
+                "$set": {
+                    'quantity': quantity
+                }
+            })
+    return cart
 
 async def get_cart_items(user):
-    return serializeList(CartItem.find({'user_id': user['_id']}))
+    cartItems = serializeList(CartItem.find({'user_id': user['_id']}))
+    for cartItem in cartItems:
+        cartItem['product'] = serializeDict(Product.find_one({'_id': ObjectId(cartItem['product_id'])}))
+    return serializeList(cartItems)
 
+async def update_cart_total_amount(cart, cartItems):
+    total = 0
+    for cartItem in cartItems:
+        total += cartItem['product']['price'] * cartItem['quantity']
+    Cart.update_one({'_id': ObjectId(cart['_id'])}, {'$set': {'total': total}})
+    
 
 async def remove_cart_items(user, item_id):
     query = {'_id': ObjectId(item_id), 'user_id': user['_id']}
