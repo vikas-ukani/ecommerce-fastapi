@@ -1,5 +1,8 @@
 from fastapi import APIRouter
 from app.seed.products_seed import seed_products_data
+"""
+Seed the categories data in the database.
+"""
 from app.seed.categories_seed import seed_categories_data
 
 router = APIRouter()

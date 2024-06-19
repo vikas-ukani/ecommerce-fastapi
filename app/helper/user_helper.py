@@ -1,5 +1,6 @@
 from app.db import serializeDict, User
 from bson.objectid import ObjectId
+from app.middleware.log_middleware import logger
 
 
 async def get_users() -> list:
@@ -19,7 +20,7 @@ async def create_user(user: dict) -> dict:
 
 
 async def get_user_by_email(email: str):
-    print("Fine user by email: " + email)
+    logger.info("Fine user by email: " + email)
     user = await User.find_one({"email": email})
     return serializeDict(user) if user is not None else None
 

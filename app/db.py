@@ -1,8 +1,8 @@
 # from motor import motor_asyncio
-from decouple import config
 from pymongo import MongoClient
+from app.config.settings import settings
 
-client = MongoClient(config('MONGO_URL'))
+client = MongoClient(settings.MONGO_URL)
 db = client["fast-com"]
 
 # Models
@@ -20,6 +20,7 @@ def serializeDict(object: dict) -> dict:
         **{key.replace('_', ''): str(object[key]) for key in object if key == "_id"},
         **{otherKey: object[otherKey] for otherKey in object if otherKey != "_id"},
     }
+
 
 def serializeList(lists: list) -> list:
     return [serializeDict(list) for list in lists]

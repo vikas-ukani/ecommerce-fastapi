@@ -1,20 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from decouple import config
-
+from app.config.settings import settings
 from app.middleware.log_middleware import LogMiddleware
 from app.log_manager import logger
-from .routes.auth import router as AuthRouter
-from .routes.users import router as UserRouter
-from .routes.products import router as ProductRouter
-from .routes.category import router as CategoryRouter
-from .routes.cart_router import router as CartRouter
-from .routes.wishlist_router import router as WishlistRouter
+
+from app.route.auth_router import router as AuthRouter
+from app.route.user_router import router as UserRouter
+from app.route.product_router import router as ProductRouter
+from app.route.category_router import router as CategoryRouter
+from app.route.cart_router import router as CartRouter
+from app.route.wishlist_router import router as WishlistRouter
 
 # Seed Route
-from .routes.seed import router as SeederRouter
+from app.route.seed_router import router as SeederRouter
 
-app = FastAPI(debug=config("DEBUG"))
+app = FastAPI(debug=settings.DEBUG)
 
 # Log Middleware.
 # app.add_middleware(LogMiddleware)

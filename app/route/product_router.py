@@ -1,15 +1,13 @@
-import app.lib.utils
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.schemas.products import ProductFilterModel, ProductResponseModel
-from app.db import Product
+from app.schema.product_schema import ProductFilterModel, ProductResponseModel, ProductBaseModel
 import re
-from app.models.product_helper import product_by_filter, getProductById
+from app.helper.product_helper import product_by_filter, getProductById
 from app.log_manager import logger
 
 router = APIRouter()
 
 
-@router.get("/product/{id}")
+@router.get("/product/{id}", response_model=ProductBaseModel, response_description="Get product by id")
 async def get_product(id: str):
     product = getProductById(id)
     if product:
@@ -22,8 +20,9 @@ async def get_product(id: str):
 
 @router.get(
     "/all-products",
-    # response_model=ProductResponseModel,
-    # response_model_exclude_unset=True
+    response_model=ProductResponseModel,
+    # response_model_exclude_unset=True,
+    response_description=" Get all products based on filters."
 )
 async def all_products(filter: ProductFilterModel = Depends()):
     query = {}

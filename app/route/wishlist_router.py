@@ -1,7 +1,7 @@
 from app.lib.utils import get_current_user
 from fastapi import APIRouter, Depends, Body
-from app.models.wishlist_helper import fetch_wishlist, create_wishlist, delete_wishlist
-from app.schemas.wishlist_schema import WishlistModel, AddWishlistSchema
+from app.helper.wishlist_helper import fetch_wishlist, create_wishlist, delete_wishlist
+from app.schema.wishlist_schema import WishlistModel, AddWishlistSchema
 from typing import List
 
 router = APIRouter()
