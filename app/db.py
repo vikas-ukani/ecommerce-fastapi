@@ -9,6 +9,7 @@ db = client["fast-com"]
 User = db.get_collection("users")
 Product = db.get_collection("products")
 Category = db.get_collection("categories")
+Wishlist = db.get_collection("wishlists")
 Cart = db.get_collection("carts")
 CartItem = db.get_collection("cart_items")
 
@@ -16,6 +17,7 @@ CartItem = db.get_collection("cart_items")
 def serializeDict(object: dict) -> dict:
     return {
         **{key: str(object[key]) for key in object if key == "_id"},
+        **{key.replace('_', ''): str(object[key]) for key in object if key == "_id"},
         **{otherKey: object[otherKey] for otherKey in object if otherKey != "_id"},
     }
 

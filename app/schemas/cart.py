@@ -4,8 +4,8 @@ from datetime import datetime
 class CartBaseSchema(BaseModel):
     user_id: str
     total: int | None = 0    
-    created_at: datetime | None = None
-    updated_at: datetime | None = None
+    created_at: datetime  = datetime.now()
+    updated_at: datetime  = datetime.now()
 
 
 class AddToCartSchema(BaseModel): 

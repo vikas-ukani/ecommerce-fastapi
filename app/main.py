@@ -9,6 +9,8 @@ from .routes.users import router as UserRouter
 from .routes.products import router as ProductRouter
 from .routes.category import router as CategoryRouter
 from .routes.cart_router import router as CartRouter
+from .routes.wishlist_router import router as WishlistRouter
+
 # Seed Route
 from .routes.seed import router as SeederRouter
 
@@ -36,6 +38,7 @@ app.include_router(AuthRouter)
 app.include_router(UserRouter)
 app.include_router(ProductRouter)
 app.include_router(CategoryRouter)
+app.include_router(WishlistRouter)
 app.include_router(CartRouter)
 
 # SeederRouters

@@ -21,8 +21,8 @@ def verify_password(password: str, hashed_password: str):
     return pwd_context.verify(password, hashed_password)
 
 
-def create_token(userId):
-    to_encode = {"userId": userId}
+def create_token(user_id):
+    to_encode = {"user_id": user_id}
     jwt_token = jwt.encode(
         to_encode, config("JWT_SECRET_KEY"), algorithm=config("JWT_ALGORITHM")
     )
@@ -32,8 +32,8 @@ def create_token(userId):
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         decoded = jwt.decode(token, key=config("JWT_SECRET_KEY"), algorithms=config("JWT_ALGORITHM"))
-        userId = decoded.get("userId")
-        user = User.find_one({"_id": ObjectId(userId)})
+        user_id = decoded.get("user_id")
+        user = User.find_one({"_id": ObjectId(user_id)})
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,

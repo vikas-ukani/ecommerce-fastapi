@@ -7,8 +7,8 @@ class UserBaseSchema(BaseModel):
     name: str
     email: str
     photo: str | None = None
-    created_at: datetime | None = None
-    updated_at: datetime | None = None
+    created_at: datetime = datetime.now()
+    updated_at: datetime  = datetime.now()
 
 class CreateUserSchema(UserBaseSchema):
     name: str = Field()
