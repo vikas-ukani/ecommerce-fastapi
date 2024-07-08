@@ -1,7 +1,7 @@
 import datetime
 from fastapi import APIRouter, status,  HTTPException, Depends
 from fastapi.encoders import jsonable_encoder
-from app.schema.auth_schema import LoginSchema, SignUpSchema
+from app.schema.auth_schema import LoginModel, LoginSchema, SignUpSchema
 from app.db import serializeDict, User
 from app.lib.utils import (
     create_token,
@@ -15,7 +15,7 @@ from app.log_manager import logger
 router = APIRouter()
 
 
-@router.post("/signin", status_code=status.HTTP_200_OK)
+@router.post("/signin", status_code=status.HTTP_200_OK, response_model=LoginModel)
 async def signIn(data: LoginSchema):
     user = serializeDict(User.find_one({"email": data.email}))
 
@@ -25,7 +25,8 @@ async def signIn(data: LoginSchema):
         if not data.password and not verify_password(data.password, user["password"]):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                                 detail="Invalid login credentials. Try again.")
-        return {"success": True, 'user': user, "token": create_token(str(user["_id"]))}
+        token = create_token(str(user["_id"]))
+        return LoginModel(success=True, token=token, user=user)
     else:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

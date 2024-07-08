@@ -2,6 +2,13 @@ from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
 from datetime import datetime
 
+class UserModel(BaseModel):
+    id: str
+    name: str
+    email: str
+    photo: str | None = None
+    created_at: datetime
+    updated_at: datetime
 
 class UserBaseSchema(BaseModel):
     name: str

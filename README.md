@@ -24,10 +24,21 @@ $ source env/bin/activate
 pip install -r requirments.txt
 ```
 
-### Run seerver
+### Run server
 
 ```bash
 python3 main.py
+```
+
+--- 
+## Docker 
+### Build Docker 
+```bash 
+docker build -t fast-commerce .
+```
+
+```bash 
+docker run fast-commerce
 ```
 
 

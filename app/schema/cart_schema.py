@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from app.schema.product_schema import ProductModel
 
 
 class CartBaseSchema(BaseModel):
@@ -11,6 +12,15 @@ class CartBaseSchema(BaseModel):
 
 class CartModel(CartBaseSchema):
     pass
+
+
+class CartItemModel(BaseModel):
+    id: str
+    product_id: str
+    user_id: str
+    quantity: int
+    cart_id: str
+    product: ProductModel | None
 
 
 class AddToCartSchema(BaseModel):

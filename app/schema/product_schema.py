@@ -3,11 +3,33 @@ from typing import List
 from enum import Enum
 
 
-class ProductBaseModel(BaseModel):
-    id: int = None
+class ProductDimensions(BaseModel):
+    width: float
+    height:float
+    depth: float
+
+class ProductReviews(BaseModel):
+    rating: float =None
+    comment: str =None
+    date: str =None
+    reviewerName: str =None
+    reviewerEmail: str =None
+
+class ProductMeta(BaseModel):
+    createdAt: str =None
+    updatedAt: str =None
+    barcode: str =None
+    qrCode: str =None
+   
+
+class ProductModel(BaseModel):
+    _id: str | None = None
+    id: int | str = None
     title: str = None
+    sku: str = None
+    weight: float = None
     description: str = None
-    price: int = None
+    price: float = None
     discountPercentage: float = None
     rating: float = None
     stock: int = None
@@ -15,9 +37,18 @@ class ProductBaseModel(BaseModel):
     category: str = None
     thumbnail: str = None
     images: List[str] = []
+    tags: List[str] = []
+    dimensions: ProductDimensions = None
+    warrantyInformation: str = None
+    shippingInformation: str = None
+    availabilityStatus: str = None
+    reviews: List[ProductReviews] = None
+    returnPolicy: str = None
+    minimumOrderQuantity: int = None
+    meta: ProductMeta = None
 
 class ProductResponseModel(BaseModel):
-    products: List[ProductBaseModel] = []
+    products: List[ProductModel] = []
     total: int
 
 

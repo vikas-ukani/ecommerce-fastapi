@@ -3,6 +3,8 @@ from typing import List
 
 
 class CategoryModel(BaseModel):
-    title: str
-    thumbnail: str
-    images: List[str]
+    _id: str | None = None
+    id: str | int = None
+    slug: str | int = None
+    name: str= None
+    thumbnail: str = None

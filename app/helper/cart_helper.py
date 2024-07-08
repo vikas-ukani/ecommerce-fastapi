@@ -50,8 +50,10 @@ async def add_to_cart(user, data: dict):
 async def get_cart_items(user):
     cartItems = serializeList(CartItem.find({'user_id': user['_id']}))
     for cartItem in cartItems:
-        cartItem['product'] = serializeDict(Product.find_one(
-            {'_id': ObjectId(cartItem['product_id'])}))
+        product = Product.find_one(
+            {'_id': ObjectId(cartItem['product_id'])})
+        del product['id']
+        cartItem['product'] = serializeDict(product)
     return serializeList(cartItems)
 
 

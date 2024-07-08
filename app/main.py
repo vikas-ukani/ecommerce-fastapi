@@ -28,18 +28,18 @@ app.add_middleware(
 )
 
 
-@app.get("/")
+@app.get("/", )
 async def index():
     logger.info({"message": "logging from the root logger"})
     return {"message": "Welcome to the fast-api project."}
 
 
-app.include_router(AuthRouter)
-app.include_router(UserRouter)
-app.include_router(ProductRouter)
-app.include_router(CategoryRouter)
-app.include_router(WishlistRouter)
-app.include_router(CartRouter)
+app.include_router(AuthRouter, prefix="/api")
+app.include_router(UserRouter, prefix="/api")
+app.include_router(ProductRouter, prefix="/api")
+app.include_router(CategoryRouter, prefix="/api")
+app.include_router(WishlistRouter, prefix="/api")
+app.include_router(CartRouter, prefix="/api")
 
 # SeederRouters
-app.include_router(SeederRouter)
+app.include_router(SeederRouter, prefix="/api")

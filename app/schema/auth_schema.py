@@ -1,6 +1,11 @@
 from pydantic import BaseModel, Field, EmailStr
 from app.schema.user_schema import UserBaseSchema
+from app.schema.user_schema import UserModel
 
+class LoginModel(BaseModel): 
+    success: bool
+    token: str
+    user: UserModel | None
 
 class LoginSchema(BaseModel):
     email: EmailStr

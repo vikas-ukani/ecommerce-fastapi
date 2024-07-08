@@ -9,7 +9,10 @@ async def seed_products_data():
     data = response.json()
 
     if data['products']:
-        await Product.insert_many(data['products'])
+        # Delete all documents and re-seed.
+        Product.delete_many({})
+
+        Product.insert_many(data['products'])
 
 
 # if __name__ == '__main__':
